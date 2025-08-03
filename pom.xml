@@ -13,10 +13,7 @@
     <description>Parent POM for CodeMedley microservices project</description>
 
     <modules>
-        <!-- Modüller buraya eklenir, örneğin:
-        <module>services/user-service</module>
-        <module>common/common-dto</module>
-        -->
+        <module>services</module>
     </modules>
 
     <properties>
