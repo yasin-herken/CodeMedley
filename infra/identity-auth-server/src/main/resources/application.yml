@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: identity-auth-server
+server:
+  port: 8085
+logging:
+  level:
+    org.springframework.security: trace
