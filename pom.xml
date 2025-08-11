@@ -15,6 +15,7 @@
     <modules>
         <module>services</module>
         <module>infra</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
