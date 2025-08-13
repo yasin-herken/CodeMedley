@@ -7,5 +7,10 @@ server:
 
 logging:
   level:
+    org.springframework.web: DEBUG
     org.springframework.security: trace
-
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
