@@ -1,5 +1,3 @@
-'use client';
-
 import {useState} from 'react';
 
 interface Book {
@@ -9,7 +7,7 @@ interface Book {
 
 export default function BookListApp() {
     const [books, setBooks] = useState<Book[]>([]);
-    const [username, setUsername] = useState('');
+
 
     const loadBooks = async () => {
         try {
