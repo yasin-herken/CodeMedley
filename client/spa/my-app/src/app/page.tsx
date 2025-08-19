@@ -3,16 +3,27 @@
 import {useState} from 'react';
 
 interface Book {
+    id: string;
     name: string;
-    // Add other book properties as needed
 }
 
-export default function Home() {
+export default function BookListApp() {
     const [books, setBooks] = useState<Book[]>([]);
+    const [username, setUsername] = useState('');
 
     const loadBooks = async () => {
         try {
-            const response = await fetch('http://localhost:8080/books');
+            const response = await fetch('http://localhost:8080/books', {
+                headers: {
+                    //'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to load books');
+            }
+
             const data: Book[] = await response.json();
             setBooks(data);
         } catch (error) {
@@ -23,14 +34,14 @@ export default function Home() {
     return (
         <div>
             <h1>Book List App</h1>
-            <p>
-                <button onClick={loadBooks}>Load Books</button>
-            </p>
-            <span>
-        {books.map((book, index) => (
-            <div key={index}>{book.name}</div>
-        ))}
-      </span>
+            (<span>
+          {books.map((book) => (
+              <div key={book.id}>
+                  {book.name}
+              </div>
+          ))}
+        </span>
+            )
         </div>
     );
 }
