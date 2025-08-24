@@ -32,10 +32,22 @@ build/
 ### VS Code ###
 .vscode/
 /infra/identity-auth-server/.gitattributes
-/infra/identity-auth-server/.gitignore
 /gateway/api-gateway/.mvn/wrapper/maven-wrapper.properties
 /infra/identity-auth-server/.mvn/wrapper/maven-wrapper.properties
 /gateway/api-gateway/mvnw
 /infra/identity-auth-server/mvnw
 /gateway/api-gateway/mvnw.cmd
 /infra/identity-auth-server/mvnw.cmd
+
+ca/ca.crt
+ca/ca.key
+ca/ca.srl
+
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.jks
+*.keystore
+*.truststore

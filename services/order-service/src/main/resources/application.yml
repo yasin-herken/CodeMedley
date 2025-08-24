@@ -4,6 +4,14 @@ spring:
 
 server:
   port: 8000
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.jks
+    key-store-password: changeit
+    #trust-store: classpath:truststore.jks
+    #trust-store-password: changeit
+    #client-auth: need
+    key-alias: order
 
 logging:
   level:
