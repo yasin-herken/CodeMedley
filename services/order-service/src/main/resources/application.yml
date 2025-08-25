@@ -11,8 +11,9 @@ server:
     #trust-store: classpath:truststore.jks
     #trust-store-password: changeit
     #client-auth: need
-    key-alias: order
 
+inventory:
+  service: https://localhost:8001/inventory
 logging:
   level:
     org.springframework.web: DEBUG

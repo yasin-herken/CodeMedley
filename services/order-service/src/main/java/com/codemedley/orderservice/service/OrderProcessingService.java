@@ -3,10 +3,14 @@ package com.codemedley.orderservice.service;
 
 import com.codemedley.orderservice.entity.Order;
 import com.codemedley.orderservice.exception.OrderNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -17,17 +21,25 @@ public class OrderProcessingService {
 
     private final Map<String, Order> orders = new HashMap<>();
 
-    @PostMapping
-    public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
-        System.out.println("Received Order For " + order.getItems().size() + " Items");
-        order.getItems().forEach((lineItem) ->
-                System.out.println("Item: " + lineItem.getItemCode() + " Quantity: " + lineItem.getQuantity())
-        );
+    @Value("${inventory.service}")
+    private String inventoryServiceUrl;
 
-        String orderId = UUID.randomUUID().toString();
-        order.setOrderId(orderId);
-        orders.put(orderId, order);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<?> createOrder(@RequestBody Order order) {
+
+        if (order != null) {
+            RestTemplate restTemplate = new RestTemplate();
+            URI uri = URI.create(inventoryServiceUrl);
+            restTemplate.put(uri, order.getItems());
+
+            order.setOrderId(UUID.randomUUID().toString());
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(order.getOrderId()).toUri();
+
+            return ResponseEntity.created(location).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @GetMapping("/{id}")
